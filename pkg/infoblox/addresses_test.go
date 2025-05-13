@@ -73,7 +73,7 @@ var _ = Describe("IP Address Management", func() {
 		Context("IPv4 record", func() {
 			BeforeEach(func() {
 				var err error
-				hostRecord, err = testClient.objMgr.CreateHostRecord(dnsEnabled, false, hostname, testView, *toDNSView(testView), v4subnet1.String(), "", "", "", "", "", false, 0, "", ibclient.EA{}, nil, false)
+				hostRecord, err = testClient.objMgr.CreateHostRecord(dnsEnabled, false, hostname, testView, *toDNSView(testView, ""), v4subnet1.String(), "", "", "", "", "", false, 0, "", ibclient.EA{}, nil, false)
 				Expect(err).NotTo(HaveOccurred())
 				Expect(hostRecord).NotTo(BeNil())
 			})
@@ -112,7 +112,7 @@ var _ = Describe("IP Address Management", func() {
 		Context("IPv6 record", func() {
 			BeforeEach(func() {
 				var err error
-				hostRecord, err = testClient.objMgr.CreateHostRecord(dnsEnabled, false, hostname, testView, *toDNSView(testView), "", v6subnet1.String(), "", "", "", "", false, 0, "", ibclient.EA{}, nil, false)
+				hostRecord, err = testClient.objMgr.CreateHostRecord(dnsEnabled, false, hostname, testView, *toDNSView(testView, ""), "", v6subnet1.String(), "", "", "", "", false, 0, "", ibclient.EA{}, nil, false)
 				Expect(err).NotTo(HaveOccurred())
 				Expect(hostRecord).NotTo(BeNil())
 			})
@@ -162,7 +162,7 @@ var _ = Describe("IP Address Management", func() {
 				hostRecord = ibclient.NewEmptyHostRecord()
 				hostRecord.Name = &hostname
 				hostRecord.NetworkView = testView
-				hostRecord.View = toDNSView(testView)
+				hostRecord.View = toDNSView(testView, "")
 				hostRecord.EnableDns = &dnsEnabled
 				hostRecord.Ipv4Addrs = []ibclient.HostRecordIpv4Addr{
 					*ibclient.NewHostRecordIpv4Addr(nextAvailableIBFunc(v4subnet1, testView), "", false, ""),
@@ -194,7 +194,7 @@ var _ = Describe("IP Address Management", func() {
 				hostRecord = ibclient.NewEmptyHostRecord()
 				hostRecord.Name = &hostname
 				hostRecord.NetworkView = testView
-				hostRecord.View = toDNSView(testView)
+				hostRecord.View = toDNSView(testView, "")
 				hostRecord.EnableDns = &dnsEnabled
 				hostRecord.Ipv4Addrs = []ibclient.HostRecordIpv4Addr{}
 				hostRecord.Ipv6Addrs = []ibclient.HostRecordIpv6Addr{
@@ -226,7 +226,7 @@ var _ = Describe("IP Address Management", func() {
 				hostRecord = ibclient.NewEmptyHostRecord()
 				hostRecord.Name = &hostname
 				hostRecord.NetworkView = testView
-				hostRecord.View = toDNSView(testView)
+				hostRecord.View = toDNSView(testView, "")
 				hostRecord.EnableDns = &dnsEnabled
 				hostRecord.Ipv4Addrs = []ibclient.HostRecordIpv4Addr{
 					*ibclient.NewHostRecordIpv4Addr(nextAvailableIBFunc(v4subnet1, testView), "", false, ""),
