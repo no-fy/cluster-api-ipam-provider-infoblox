@@ -101,6 +101,10 @@ func (r *InfobloxIPPoolReconciler) reconcile(ctx context.Context, pool *v1alpha1
 		pool.Spec.NetworkView = ibclient.GetHostConfig().DefaultNetworkView
 	}
 
+	if pool.Spec.DNSView == "" {
+		pool.Spec.DNSView = ibclient.GetHostConfig().DefaultDNSView
+	}
+
 	// TODO: handle this in a better way
 	if ok, err := ibclient.CheckNetworkViewExists(pool.Spec.NetworkView); err != nil || !ok {
 		logger.Error(err, "could not find network view", "networkView", pool.Spec.NetworkView)

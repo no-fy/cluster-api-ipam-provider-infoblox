@@ -14,7 +14,7 @@ import (
 // - For some reason Infoblox does not assign network view to the host record. Workarounds were provided in the code with tag: [Issue].
 
 // getOrNewHostRecord returns the host record with the given hostname in the given view, or creates a new host record if no host record with the given hostname exists.
-func (c *client) getOrNewHostRecord(view, hostname, zone string) (*ibclient.HostRecord, error) {
+func (c *client) getOrNewHostRecord(view string, hostname, zone string) (*ibclient.HostRecord, error) {
 	// [Issue] For some reason Infoblox does not assign view to the host record. Empty netview and dnsview is a workaround to find host.
 	hostRecord, err := c.objMgr.GetHostRecord("", "", hostname, "", "")
 	if err != nil {
@@ -33,7 +33,7 @@ func (c *client) getOrNewHostRecord(view, hostname, zone string) (*ibclient.Host
 		hostRecord.EnableDns = ptr.To(false)
 		if zone != "" {
 			hostRecord.EnableDns = ptr.To(true)
-			hostRecord.View = toDNSView(view)
+			hostRecord.View = toDNSView(view, c.hc.DefaultDNSView)
 		}
 	}
 
@@ -91,7 +91,7 @@ func getHostRecordAddrInSubnet(hr *ibclient.HostRecord, subnet netip.Prefix) (ne
 }
 
 // GetOrAllocateAddress returns the IP address of the given hostname in the given subnet. If the hostname does not have an IP address in the subnet, it will allocate one.
-func (c *client) GetOrAllocateAddress(view string, subnet netip.Prefix, hostname, zone string) (netip.Addr, error) {
+func (c *client) GetOrAllocateAddress(view string, subnet netip.Prefix, hostname, zone, dnsView string) (netip.Addr, error) {
 	hr, err := c.getOrNewHostRecord(view, hostname, zone)
 	if err != nil {
 		return netip.Addr{}, fmt.Errorf("failed to get or create Infoblox host record: %w", err)
@@ -111,7 +111,7 @@ func (c *client) GetOrAllocateAddress(view string, subnet netip.Prefix, hostname
 
 	// [Issue] this is to reassign netview and view as Infoblox is dropping them for me. Without that updating host record by reference will not work
 	hr.NetworkView = view
-	hr.View = toDNSView(view)
+	hr.View = toDNSView(view, dnsView)
 
 	if err := c.createOrUpdateHostRecord(hr); err != nil {
 		return netip.Addr{}, fmt.Errorf("failed to create or update Infoblox host record: %w", err)
@@ -173,7 +173,7 @@ func (c *client) ReleaseAddress(view string, subnet netip.Prefix, hostname strin
 
 	// [Issue] this is to reassign netview and view as Infoblox is dropping them for me. Without that updating host record by reference will not work
 	hr.NetworkView = view
-	hr.View = toDNSView(view)
+	hr.View = toDNSView(view, c.hc.DefaultDNSView)
 
 	if len(hr.Ipv4Addrs) == 0 && len(hr.Ipv6Addrs) == 0 {
 		_, err := c.connector.DeleteObject(hr.Ref)
@@ -184,7 +184,10 @@ func (c *client) ReleaseAddress(view string, subnet netip.Prefix, hostname strin
 	return err
 }
 
-func toDNSView(view string) *string {
+func toDNSView(view string, dnsView string) *string {
+	if dnsView != "" {
+		return &dnsView
+	}
 	if view == "" {
 		return nil
 	}

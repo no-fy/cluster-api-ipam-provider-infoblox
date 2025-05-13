@@ -14,6 +14,7 @@ spec:
   credentialsSecretRef:
     name: some-credentials
   defaultNetworkView: "some-view"
+  defaultDNSView: "some-dns-view"
   host: "some.host.com"
   disableTLSVerification: false
   customCAPath: "/some/path/ca.crt"

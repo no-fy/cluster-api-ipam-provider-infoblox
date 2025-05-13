@@ -179,7 +179,7 @@ func (h *InfobloxClaimHandler) EnsureAddress(ctx context.Context, address *ipamv
 		}
 
 		var ipaddr netip.Addr
-		ipaddr, err = h.ibclient.GetOrAllocateAddress(h.pool.Spec.NetworkView, subnet, hostName, h.pool.Spec.DNSZone)
+		ipaddr, err = h.ibclient.GetOrAllocateAddress(h.pool.Spec.NetworkView, subnet, hostName, h.pool.Spec.DNSZone, h.pool.Spec.DNSView)
 		if err != nil {
 			continue
 		}

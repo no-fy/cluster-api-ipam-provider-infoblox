@@ -57,6 +57,7 @@ spec:
   disableTLSVerification: true      # disable TLSVerification
   customCAPath: "/some/path/ca.crt" # path to a file which contians list of custom Certificate Authorities that can be used to verify SSL certifcates if 'disableTLSVerification' is set to 'false'. Host's default authorities will be used if not specified.
   defaultNetworkView: "some-view"   # default network view
+  defaultDNSView: "some-dns-view"   # default DNS view
   wapiVersion: "2.12"               # Web API Version of the Infoblox server
 ```
 
@@ -74,6 +75,7 @@ spec:
   instance:
     name: "production"              # name of the InfobloxInstance
   networkView: "datacenter-network" # Infoblox network view that will be used
+  dnsView: "datacenter-dns"         # Infoblox DNS view that will be used
   subnets:                          # list of the subnets in the network view we want to get IP addresses from
     - cidr: "10.0.0.0/24"           # subnet CIDR
       gateway: "10.0.0.1"           # gateway that should ba assigned to the IP Address claim
@@ -88,7 +90,7 @@ If multiple subnets are specified, the host record will be created in the first 
 
 ### Creating DNS Entries
 
-Since Infoblox also includes DNS management, host records can also reference a DNS zone to create DNS entries for each host.
+Since Infoblox also includes DNS management, host records can also reference a DNS zone to create DNS entries for each host. The DNS view can be customized at both the InfobloxInstance level (as a default) and at the InfobloxIPPool level (to override the default).
 
 In order for these records to be useful, the host record should be named after the hostname of the server it is created for. Unfortunately Cluster API currently offers no common way to set hostnames for machines. While bootstrap providers are likely to provide some way of setting it, there is no way to predict what the hostname will be.
 
@@ -98,7 +100,7 @@ We've currently only implemented one strategy for identifying the hostname of a 
 
 Our strategy uses the name of the CAPI `Machine` as the hostname. To determine the Machine name the provider follows the owner chain from the `IPAddressClaim` via the infrastructure provider resources to the `Machine`. This is used by searching through the owner references up to a depth of five.
 
-To enable setting DNS entries, set the `spec.dnsZone` parameter on the `InfobloxIPPool` to your desired zone. The resulting DNS entries will then be `<machine name>.<dnsZone>`. The DNS view will be set to `default.<dnsZone>`.
+To enable setting DNS entries, set the `spec.dnsZone` parameter on the `InfobloxIPPool` to your desired zone. The resulting DNS entries will then be `<machine name>.<dnsZone>`. The DNS view will be set to the value specified in `spec.dnsView` if provided, otherwise it will use the default DNS view from the InfobloxInstance.
 
 ## Running Tests
 

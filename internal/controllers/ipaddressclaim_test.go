@@ -77,6 +77,7 @@ var _ = Describe("IPAddressClaimReconciler", func() {
 							{CIDR: "10.0.0.0/24", Gateway: "10.0.0.1"},
 						},
 						NetworkView: "default",
+						DNSView:     "default",
 						DNSZone:     "",
 					},
 				}
@@ -124,6 +125,7 @@ var _ = Describe("IPAddressClaimReconciler", func() {
 							{CIDR: "10.0.1.0/24", Gateway: "10.0.1.1"},
 						},
 						NetworkView: "default",
+						DNSView:     "default",
 						DNSZone:     "",
 					},
 				}
@@ -269,6 +271,7 @@ var _ = Describe("IPAddressClaimReconciler", func() {
 							{CIDR: "10.0.1.0/24"},
 						},
 						NetworkView: "default",
+						DNSView:     "default",
 						DNSZone:     "",
 					},
 				}
@@ -349,6 +352,7 @@ var _ = Describe("IPAddressClaimReconciler", func() {
 							{CIDR: "10.0.0.0/24", Gateway: "10.0.0.1"},
 						},
 						NetworkView: "default",
+						DNSView:     "default",
 						DNSZone:     "",
 					},
 				}
@@ -395,6 +399,7 @@ var _ = Describe("IPAddressClaimReconciler", func() {
 								{CIDR: "10.0.0.0/24", Gateway: "10.0.0.1"},
 							},
 							NetworkView: "default",
+							DNSView:     "default",
 							DNSZone:     "",
 						},
 					}
@@ -458,6 +463,7 @@ var _ = Describe("IPAddressClaimReconciler", func() {
 								{CIDR: "10.0.0.0/24", Gateway: "10.0.0.1"},
 							},
 							NetworkView: "default",
+							DNSView:     "default",
 							DNSZone:     "",
 						},
 					}
@@ -530,6 +536,7 @@ var _ = Describe("IPAddressClaimReconciler", func() {
 						{CIDR: "10.0.0.0/24", Gateway: "10.0.0.1"},
 					},
 					NetworkView: "default",
+					DNSView:     "default",
 					DNSZone:     "",
 				},
 			}
@@ -624,6 +631,7 @@ var _ = Describe("IPAddressClaimReconciler", func() {
 						{CIDR: "10.0.0.0/24", Gateway: "10.0.0.1"},
 					},
 					NetworkView: "default",
+					DNSView:     "default",
 					DNSZone:     "",
 				},
 			}
@@ -739,6 +747,7 @@ var _ = Describe("IPAddressClaimReconciler", func() {
 						{CIDR: "10.0.0.0/24", Gateway: "10.0.0.1"},
 					},
 					NetworkView: "default",
+					DNSView:     "default",
 					DNSZone:     "",
 				},
 			}
@@ -1050,6 +1059,7 @@ var _ = Describe("IPAddressClaimReconciler", func() {
 						{CIDR: "10.0.0.0/24", Gateway: "10.0.0.1"},
 					},
 					NetworkView: "default",
+					DNSView:     "default",
 					DNSZone:     "",
 				},
 			}
@@ -1151,6 +1161,7 @@ var _ = Describe("IPAddressClaimReconciler", func() {
 						{CIDR: "10.0.1.0/24", Gateway: "10.0.1.1"},
 					},
 					NetworkView: "default",
+					DNSView:     "default",
 					DNSZone:     "",
 				},
 			}

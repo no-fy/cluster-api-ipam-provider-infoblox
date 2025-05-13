@@ -85,18 +85,18 @@ func (mr *MockClientMockRecorder) GetHostConfig() *gomock.Call {
 }
 
 // GetOrAllocateAddress mocks base method.
-func (m *MockClient) GetOrAllocateAddress(arg0 string, arg1 netip.Prefix, arg2, arg3 string) (netip.Addr, error) {
+func (m *MockClient) GetOrAllocateAddress(arg0 string, arg1 netip.Prefix, arg2, arg3, arg4 string) (netip.Addr, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetOrAllocateAddress", arg0, arg1, arg2, arg3)
+	ret := m.ctrl.Call(m, "GetOrAllocateAddress", arg0, arg1, arg2, arg3, arg4)
 	ret0, _ := ret[0].(netip.Addr)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // GetOrAllocateAddress indicates an expected call of GetOrAllocateAddress.
-func (mr *MockClientMockRecorder) GetOrAllocateAddress(arg0, arg1, arg2, arg3 any) *gomock.Call {
+func (mr *MockClientMockRecorder) GetOrAllocateAddress(arg0, arg1, arg2, arg3, arg4 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetOrAllocateAddress", reflect.TypeOf((*MockClient)(nil).GetOrAllocateAddress), arg0, arg1, arg2, arg3)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetOrAllocateAddress", reflect.TypeOf((*MockClient)(nil).GetOrAllocateAddress), arg0, arg1, arg2, arg3, arg4)
 }
 
 // ReleaseAddress mocks base method.
